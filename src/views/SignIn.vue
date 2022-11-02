@@ -92,12 +92,16 @@ import MaterialSwitch from "@/components/MaterialSwitch.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
 import { mapMutations, mapActions } from "vuex";
 import accountApi from "../api/account";
+import utils from '../utils';
 export default {
   name: "sign-in",
   components: {
     MaterialInput,
     MaterialSwitch,
     MaterialButton,
+  },
+  created(){
+    utils.logOut();
   },
   data() {
     return {

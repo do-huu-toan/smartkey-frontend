@@ -31,8 +31,12 @@ export default {
   getUserId() {
     const token = this.getToken();
     if (token) {
-      return this.parseJwt(token).id
+      return this.parseJwt(token).id;
     }
     return null;
+  },
+  logOut() {
+    const token = this.getToken();
+    if (token) Cookies.remove("accessToken");
   },
 };

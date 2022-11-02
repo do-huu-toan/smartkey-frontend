@@ -46,8 +46,6 @@ export default {
   components: { MaterialSwitch },
   methods: {
     handleChangeSwitch(id, value) {
-      console.log(value);
-      console.log(id);
       var device = this.devices.find((device) => device.id == id);
       device.statusKey = value;
     },

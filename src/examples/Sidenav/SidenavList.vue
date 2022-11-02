@@ -78,7 +78,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="sign-in"
-          navText="SignIn"
+          navText="Đăng xuât"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">login</i>

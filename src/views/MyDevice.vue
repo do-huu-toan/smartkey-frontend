@@ -61,7 +61,7 @@
     :confirm-loading="confirmLoading"
     @ok="handleModalSubmit"
   >
-    <a-input placeholder="Nhập tên thiết bị" />
+    <a-input v-model:value="deviceName" placeholder="Nhập tên thiết bị" />
   </a-modal>
 </template>
 <script>
@@ -82,6 +82,7 @@ export default {
       devices: [],
       isShowModal: false,
       confirmLoading: false,
+      deviceName: "",
     };
   },
   methods: {
@@ -90,6 +91,11 @@ export default {
     },
     async handleModalSubmit() {
       this.isShowModal = false;
+      this.confirmLoading = true;
+      await devicesApi.addNewDevice({
+        name: this.deviceName,
+      });
+      this.confirmLoading = false;
     },
   },
 };
