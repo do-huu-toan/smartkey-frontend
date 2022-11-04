@@ -67,6 +67,7 @@
 <script>
 import MaterialButton from "../components/MaterialButton.vue";
 import devicesApi from "@/api/device";
+import { mapState } from "vuex";
 import {
   Modal as AModal,
   Input as AInput,
@@ -94,9 +95,16 @@ export default {
       this.confirmLoading = true;
       await devicesApi.addNewDevice({
         name: this.deviceName,
+        userId: this.userId,
       });
+      this.devices = await devicesApi.getDeviceByUserId();
       this.confirmLoading = false;
     },
+  },
+  computed: {
+    ...mapState({
+      userId: (state) => state.userStore.userId,
+    }),
   },
 };
 </script>

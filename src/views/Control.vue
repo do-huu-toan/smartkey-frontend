@@ -59,6 +59,7 @@ export default {
 .devices {
   margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
   .lock + .lock {
     margin-left: 30px;
   }

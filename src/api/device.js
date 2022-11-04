@@ -12,9 +12,7 @@ const getDeviceByUserId = async () => {
 };
 const addNewDevice = async (data) => {
   try {
-    const res = await BaseApi.post(`${ApiUrl}`, {
-      data,
-    });
+    const res = await BaseApi.post(`${ApiUrl}`, data);
     return res.data;
   } catch (e) {
     console.log(e);

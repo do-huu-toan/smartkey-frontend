@@ -39,7 +39,7 @@ Coded by www.creative-tim.com
 import Sidenav from "./examples/Sidenav";
 import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "App",
@@ -48,8 +48,12 @@ export default {
     Configurator,
     Navbar,
   },
+  created(){
+    this.loadDateForUser()
+  },
   methods: {
-    ...mapMutations(["toggleConfigurator", "navbarMinimize"])
+    ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
+    ...mapActions(["loadDateForUser"])
   },
   computed: {
     ...mapState([
@@ -63,8 +67,16 @@ export default {
       "showNavbar",
       "showFooter",
       "showConfig",
-      "hideConfigButton"
-    ])
+      "hideConfigButton",
+    ]),
+    ...mapState({
+      token: state => state.userStore.token
+    }),
+  },
+  watch: {
+    token: function(){
+      this.loadDateForUser()
+    }
   },
   beforeMount() {
     this.$store.state.isTransparent = "bg-transparent";
@@ -75,5 +87,6 @@ export default {
       sidenav.classList.add("g-sidenav-pinned");
     }
   }
+  
 };
 </script>

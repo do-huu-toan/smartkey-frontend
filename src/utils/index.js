@@ -11,7 +11,7 @@ export default {
   getToken() {
     const token = Cookies.get("accessToken");
     if (token) return token;
-    return null;
+    return "";
   },
   parseJwt(token) {
     var base64Url = token.split(".")[1];
@@ -25,7 +25,6 @@ export default {
         })
         .join("")
     );
-
     return JSON.parse(jsonPayload);
   },
   getUserId() {

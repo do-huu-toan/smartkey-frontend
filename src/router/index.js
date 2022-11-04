@@ -1,15 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Dashboard from "../views/Dashboard.vue";
-import Tables from "../views/Tables.vue";
-import Billing from "../views/Billing.vue";
-import RTL from "../views/Rtl.vue";
-import Notifications from "../views/Notifications.vue";
-import Profile from "../views/Profile.vue";
-import SignIn from "../views/SignIn.vue";
-import SignUp from "../views/SignUp.vue";
-import Control from "../views/Control.vue";
-import Log from "../views/Log.vue";
-import MyDevice from "../views/MyDevice.vue";
 import utils from "../utils";
 const routes = [
   {
@@ -20,47 +9,47 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    component: Dashboard,
+    component: () => import("../views/Dashboard.vue"),
   },
   {
     path: "/tables",
     name: "Tables",
-    component: Tables,
+    component: () => import("../views/Tables.vue"),
   },
   {
     path: "/billing",
     name: "Billing",
-    component: Billing,
+    component: () => import("../views/Billing.vue"),
   },
   {
     path: "/rtl-page",
     name: "RTL",
-    component: RTL,
+    component: () => import("../views/Rtl.vue"),
   },
   {
     path: "/notifications",
     name: "Notifications",
-    component: Notifications,
+    component: () => import("../views/Notifications.vue"),
   },
   {
     path: "/profile",
     name: "Profile",
-    component: Profile,
+    component: () => import("../views/Profile.vue"),
   },
   {
     path: "/sign-in",
     name: "SignIn",
-    component: SignIn,
+    component: () => import("../views/SignIn.vue"),
   },
   {
     path: "/sign-up",
     name: "SignUp",
-    component: SignUp,
+    component: () => import("../views/SignUp.vue"),
   },
   {
     path: "/control",
     name: "Control",
-    component: Control,
+    component: () => import("../views/Control.vue"),
     meta: {
       requiresAuth: true,
     },
@@ -68,7 +57,7 @@ const routes = [
   {
     path: "/logs",
     name: "Logs",
-    component: Log,
+    component: () => import("../views/Log.vue"),
     meta: {
       requiresAuth: true,
     },
@@ -76,7 +65,7 @@ const routes = [
   {
     path: "/my-devices",
     name: "MyDevice",
-    component: MyDevice,
+    component: () => import("../views/MyDevice.vue"),
     meta: {
       requiresAuth: true,
     },
