@@ -55,6 +55,14 @@ export default {
     ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
     ...mapActions(["loadDateForUser"])
   },
+  sockets: {
+    connect: function () {
+      console.log("socket connected");
+    },
+    eventDeviceOnline: function(val){
+      console.log(val)
+    }
+  },
   computed: {
     ...mapState([
       "isRTL",

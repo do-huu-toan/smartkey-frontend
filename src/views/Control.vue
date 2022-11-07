@@ -3,6 +3,7 @@
     Đây là trang quản lý thiết bị
     <div class="devices">
       <div v-for="device in devices" class="card lock" :key="device.id">
+        <div class="device-online"></div>
         <div class="lock-title">
           <div>{{ device.statusKey ? "ON" : "OFF" }}</div>
           <material-switch
@@ -40,7 +41,6 @@ export default {
   data() {
     return {
       devices: [],
-      // statusKey: true,
     };
   },
   components: { MaterialSwitch },
@@ -48,6 +48,10 @@ export default {
     handleChangeSwitch(id, value) {
       var device = this.devices.find((device) => device.id == id);
       device.statusKey = value;
+      this.$socket.emit('control', {
+        id,
+        value
+      });
     },
   },
 };
@@ -69,18 +73,28 @@ export default {
     height: 136px;
     border-radius: 25px;
     padding: 20px;
+    position: relative;
+    .device-online {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: green;
+      right: 20px;
+      bottom: 20px;
+    }
     .lock-title {
       font-weight: bold;
       display: flex;
       justify-content: space-between;
     }
-    i{
-      flex:1;
+    i {
+      flex: 1;
       display: flex;
       align-items: center;
     }
-    .lock-content{
-      flex:1;
+    .lock-content {
+      flex: 1;
       display: flex;
       align-items: flex-end;
       font-weight: bold;
