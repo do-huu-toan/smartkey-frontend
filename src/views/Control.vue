@@ -3,14 +3,15 @@
     Đây là trang quản lý thiết bị
     <div class="devices">
       <div v-for="device in devices" class="card lock" :key="device.id">
-        <div class="device-online"></div>
+        <div v-if="checkDeviceOnline(device.id)" class="device-online"></div>
         <div class="lock-title">
           <div>{{ device.statusKey ? "ON" : "OFF" }}</div>
           <material-switch
             :id="device.id"
             class="lock-switch"
-            :checked="statusKey"
+            :checked="device.statusKey"
             @change-switch="handleChangeSwitch"
+            :disable="!checkDeviceOnline(device.id)"
           >
           </material-switch>
         </div>
@@ -25,9 +26,10 @@
 <script>
 import MaterialSwitch from "@/components/MaterialSwitch.vue";
 import devicesApi from "@/api/device.js";
+import { mapState } from "vuex";
 export default {
   name: "manage-device",
-  async created() {
+  async mounted() {
     const listDevices = await devicesApi.getDeviceByUserId();
     if (listDevices.length > 0) {
       for (let device of listDevices) {
@@ -48,10 +50,41 @@ export default {
     handleChangeSwitch(id, value) {
       var device = this.devices.find((device) => device.id == id);
       device.statusKey = value;
-      this.$socket.emit('control', {
+      this.$socket.emit("control", {
         id,
-        value
+        value,
       });
+    },
+    checkDeviceOnline(id) {
+      var isOnline = this.deviceOnline.find(
+        (item) => item.key.indexOf(id) != -1
+      );
+      if (isOnline != null && isOnline != undefined) return true;
+      return false;
+    },
+  },
+  computed: {
+    ...mapState({
+      deviceOnline: (state) => state.deviceStore.deviceOnline,
+    }),
+  },
+  updated(){
+    console.log("Update component");
+  },
+  watch: {
+    deviceOnline(value) {
+      console.log("Run watch");
+      var newDataDevice = [];
+      for (let device of this.devices) {
+        let isContain = value.filter((item) =>
+          item.key.startsWith(`device/${device.id}`)
+        );
+        if (isContain.length > 0) {
+          device.statusKey = isContain[0].status.status;
+        }
+        newDataDevice.push(device);
+      }
+      this.devices = newDataDevice;
     },
   },
 };

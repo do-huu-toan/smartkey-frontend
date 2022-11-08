@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import userStore from "./user";
+import deviceStore from "./device";
 export default createStore({
   state: {
     hideConfigButton: false,
@@ -62,5 +63,6 @@ export default createStore({
   getters: {},
   modules: {
     userStore,
+    deviceStore
   },
 });

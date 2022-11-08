@@ -9,6 +9,7 @@
       v-model="value"
       @change="handleChange"
       :checked="checked"
+      :disabled="disable"
     />
     <label class="form-check-label ms-3" :class="labelClass" :for="id">
       <slot />
@@ -37,7 +38,8 @@ export default {
       type: String,
       default: "",
     },
-    checked: Boolean
+    checked: Boolean,
+    disable: Boolean
   },
   methods: {
     handleChange() {

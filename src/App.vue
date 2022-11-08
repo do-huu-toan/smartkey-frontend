@@ -53,14 +53,19 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
-    ...mapActions(["loadDateForUser"])
+    ...mapActions(["loadDateForUser"]),
+    ...mapActions(["setDeviceOnline"]),
+    ...mapActions(["setStatusDeviceOnlineByKey"]),
   },
   sockets: {
     connect: function () {
       console.log("socket connected");
     },
     eventDeviceOnline: function(val){
-      console.log(val)
+      this.setDeviceOnline(val);
+    },
+    statusDeviceChange: function(data){
+      this.setStatusDeviceOnlineByKey(data)
     }
   },
   computed: {
