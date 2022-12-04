@@ -65,6 +65,7 @@ export default {
       this.setDeviceOnline(val);
     },
     statusDeviceChange: function(data){
+      console.log(data);
       this.setStatusDeviceOnlineByKey(data)
     }
   },

@@ -20,14 +20,9 @@
                   Thiết bị
                 </th>
                 <th
-                  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                >
-                  Thông tin
-                </th>
-                <th
                   class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                 >
-                  Hành động
+                  Nội dung
                 </th>
                 <th
                   class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -37,35 +32,23 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-for="(log, index) in listLog" :key="index">
                 <td>
                   <div class="d-flex px-2 py-1">
-                    <div>
-                      <img
-                        src="../assets/img/team-2.jpg"
-                        class="avatar avatar-sm me-3 border-radius-lg"
-                        alt="user1"
-                      />
-                    </div>
                     <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm">John Michael</h6>
-                      <p class="text-xs text-secondary mb-0">
-                        john@creative-tim.com
-                      </p>
+                      <h6 class="mb-0 text-sm">{{ log.device }}</h6>
                     </div>
                   </div>
                 </td>
-                <td>
-                  <p class="text-xs font-weight-bold mb-0">Manager</p>
-                  <p class="text-xs text-secondary mb-0">Organization</p>
-                </td>
                 <td class="align-middle text-center text-sm">
-                  <span class="badge badge-sm bg-gradient-success">Online</span>
+                  <span class="badge badge-sm bg-gradient-success">{{
+                    log.content
+                  }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold"
-                    >23/04/18</span
-                  >
+                  <span class="text-secondary text-xs font-weight-bold">{{
+                    dateTimeToString(log.createdAt)
+                  }}</span>
                 </td>
               </tr>
             </tbody>
@@ -77,7 +60,36 @@
 </template>
 
 <script>
-export default {};
+import logApi from "@/api/log";
+export default {
+  data() {
+    return {
+      listLog: [],
+    };
+  },
+  async created() {
+    this.listLog = await logApi.getLogByUserId();
+    console.log(this.listLog);
+  },
+  methods: {
+    dateTimeToString(dateTime) {
+      var m = new Date(dateTime);
+      var dateString =
+        m.getFullYear() +
+        "/" +
+        ("0" + (m.getMonth() + 1)).slice(-2) +
+        "/" +
+        ("0" + m.getDate()).slice(-2) +
+        " " +
+        ("0" + m.getHours()).slice(-2) +
+        ":" +
+        ("0" + m.getMinutes()).slice(-2) +
+        ":" +
+        ("0" + m.getSeconds()).slice(-2);
+        return dateString;
+    },
+  },
+};
 </script>
 
 <style></style>
